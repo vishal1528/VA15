@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Birthday Wish for Aanchal</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Playfair Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- Fontshare CDN for Satoshi -->
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400&display=swap" rel="stylesheet">
+
+    <!-- GSAP (Animation Library) CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <!-- Canvas Confetti CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        /* Base Styling & Custom Fonts */
+        body {
+            background: linear-gradient(135deg, #3a2a7a 0%, #2a1b5e 100%);
+            color: #e2e8f0;
+            font-family: 'Satoshi', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Floating Flower Background */
+        .floating-flowers {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+        
+        .flower {
+            position: absolute;
+            font-size: 48px;
+            opacity: 0.6;
+            animation: float 20s infinite linear;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+        }
+        
+        .flower:nth-child(1) { top: 5%; left: 3%; animation-delay: 0s; animation-duration: 25s; }
+        .flower:nth-child(2) { top: 15%; left: 85%; animation-delay: 2s; animation-duration: 30s; }
+        .flower:nth-child(3) { top: 65%; left: 8%; animation-delay: 4s; animation-duration: 22s; }
+        .flower:nth-child(4) { top: 75%; left: 75%; animation-delay: 6s; animation-duration: 28s; }
+        .flower:nth-child(5) { top: 35%; left: 92%; animation-delay: 8s; animation-duration: 35s; }
+        .flower:nth-child(6) { top: 65%; left: 55%; animation-delay: 10s; animation-duration: 20s; }
+        .flower:nth-child(7) { top: 25%; left: 35%; animation-delay: 12s; animation-duration: 29s; }
+        .flower:nth-child(8) { top: 85%; left: 25%; animation-delay: 14s; animation-duration: 26s; }
+        .flower:nth-child(9) { top: 45%; left: 15%; animation-delay: 16s; animation-duration: 32s; }
+        .flower:nth-child(10) { top: 10%; left: 65%; animation-delay: 18s; animation-duration: 24s; }
+        .flower:nth-child(11) { top: 55%; left: 80%; animation-delay: 20s; animation-duration: 27s; }
+        .flower:nth-child(12) { top: 30%; left: 50%; animation-delay: 22s; animation-duration: 31s; }
+        .flower:nth-child(13) { top: 70%; left: 40%; animation-delay: 24s; animation-duration: 23s; }
+        .flower:nth-child(14) { top: 20%; left: 20%; animation-delay: 26s; animation-duration: 33s; }
+        .flower:nth-child(15) { top: 80%; left: 60%; animation-delay: 28s; animation-duration: 29s; }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            25% { transform: translate(40px, 50px) rotate(90deg) scale(1.1); }
+            50% { transform: translate(-30px, 60px) rotate(180deg) scale(0.9); }
+            75% { transform: translate(35px, -30px) rotate(270deg) scale(1.2); }
+            100% { transform: translate(0, 0) rotate(360deg) scale(1); }
+        }
+        
+        /* Semi-Circle Background Elements */
+        .semi-circles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -3;
+        }
+        
+        .semi-circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.2;
+        }
+        
+        .semi-circle-1 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, #ec4899, transparent 70%);
+            top: -100px;
+            left: -100px;
+        }
+        
+        .semi-circle-2 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #8b5cf6, transparent 70%);
+            top: 50%;
+            right: -150px;
+        }
+        
+        .semi-circle-3 {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, #3b82f6, transparent 70%);
+            bottom: -100px;
+            left: 30%;
+        }
+        
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: rgba(40, 35, 80, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #f9a8d4, #c4b5fd, #93c5fd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: gradient-shift 3s ease-in-out infinite;
+        }
+        
+        @keyframes gradient-shift {
+            0% { background-position: 0% center; }
+            50% { background-position: 100% center; }
+            100% { background-position: 0% center; }
+        }
+
+        /* Custom Button Style */
+        .glow-button {
+            background: linear-gradient(90deg, #ec4899, #8b5cf6);
+            box-shadow: 0 0 15px rgba(236, 72, 153, 0.5), 0 0 5px rgba(139, 92, 246, 0.4);
+            transition: all 0.3s ease-in-out;
+            color: white;
+        }
+        .glow-button:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 0 25px rgba(236, 72, 153, 0.7), 0 0 10px rgba(139, 92, 246, 0.6);
+        }
+
+        /* Pulsing Icon Animation */
+        .pulsing-icon {
+            animation: pulse 2.5s infinite cubic-bezier(0.4, 0, 0.6, 1);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 5px rgba(244, 114, 182, 0.5));
+            }
+            50% {
+                transform: scale(1.2);
+                filter: drop-shadow(0 0 15px rgba(244, 114, 182, 0.8));
+            }
+        }
+        
+        /* Hide scrollbar */
+        body::-webkit-scrollbar { display: none; }
+        body { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Step Card Styling */
+        .step-card {
+            transition: all 0.5s ease;
+        }
+        
+        /* Polaroid Effect - Updated for 1192x1240 aspect ratio */
+        .polaroid {
+            background: white;
+            padding: 15px 15px 45px 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transform: rotate(2deg);
+            transition: transform 0.3s ease;
+            width: 280px; /* Adjusted width */
+            height: auto;
+            margin: 0 auto;
+        }
+        
+        .polaroid-image-container {
+            width: 100%;
+            height: 0;
+            padding-bottom: 104%; /* 1240/1192 ≈ 1.04 or 104% */
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .polaroid-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Grid Item Styling */
+        .grid-item {
+            transition: all 0.3s ease;
+        }
+        
+        .grid-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+/* Video Container - 9:16 Aspect Ratio */
+.video-container {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    height: 0;
+    padding-bottom: 177.78%;
+    margin: 1rem auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+        
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Video Loading Animation */
+        .video-loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            color: white;
+            font-size: 1.2rem;
+            background: rgba(0,0,0,0.5);
+        }
+        
+        .video-loading .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Sound Control */
+        .sound-control {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+        
+        .sound-control:hover {
+            background: rgba(0,0,0,0.9);
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body class="w-full min-h-screen flex items-center justify-center p-4">
+
+    <!-- Floating Flowers Background -->
+    <div class="floating-flowers">
+        <div class="flower">🌸</div>
+        <div class="flower">🌺</div>
+        <div class="flower">🌼</div>
+        <div class="flower">💮</div>
+        <div class="flower">🏵️</div>
+        <div class="flower">🌷</div>
+        <div class="flower">🌹</div>
+        <div class="flower">🌸</div>
+        <div class="flower">🌺</div>
+        <div class="flower">🌼</div>
+        <div class="flower">💮</div>
+        <div class="flower">🏵️</div>
+        <div class="flower">🌷</div>
+        <div class="flower">🌹</div>
+        <div class="flower">🌸</div>
+    </div>
+    
+    <!-- Semi-Circle Background Elements -->
+    <div class="semi-circles">
+        <div class="semi-circle semi-circle-1"></div>
+        <div class="semi-circle semi-circle-2"></div>
+        <div class="semi-circle semi-circle-3"></div>
+    </div>
+    
+    <!-- Progress Bar -->
+    <div class="fixed top-5 left-1/2 -translate-x-1/2 w-4/5 max-w-md h-2 rounded-full glass-card z-50">
+        <div id="progress-fill" class="h-full rounded-full bg-gradient-to-r from-pink-500 to-purple-500 transition-all duration-500 ease-out" style="width: 0%;"></div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="w-full max-w-2xl mx-auto p-4 md:p-6 text-center z-10">
+
+        <!-- Steps Content (Step 1-5) -->
+        <!-- Step 1 -->
+        <div id="step-1" class="step-card">
+            <div class="glass-card rounded-2xl p-8 md:p-12 flex flex-col items-center gap-6">
+                <span class="text-6xl pulsing-icon">🌸</span>
+                <h1 class="text-4xl md:text-5xl font-bold gradient-text">Hey Aanchal,</h1>
+                <p class="text-slate-200 text-lg">I built a little world for you to bring a smile to your face today.</p>
+                <button data-next="2" class="next-btn glow-button font-bold py-3 px-8 rounded-full mt-4">Let's Begin</button>
+            </div>
+        </div>
+
+        <!-- Step 2 - Updated with 9:16 Video and Sound -->
+        <div id="step-2" class="step-card hidden">
+            <div class="glass-card rounded-2xl p-8 md:p-12 flex flex-col items-center gap-6">
+                <span class="text-6xl">🎉</span>
+                <h2 class="text-4xl md:text-5xl font-bold gradient-text">Happy Birthday!</h2>
+                <p class="text-slate-200 text-lg leading-relaxed">We haven't talked much, but I love listening to you. Some mornings I don't want to get up, yet I come to college just to see you. This first year with you has been truly special having you around is a gift.</p>
+                
+                <!-- Video Container with 9:16 Aspect Ratio -->
+                <div class="video-container">
+                    <video id="birthday-video" playsinline>
+                        <!-- Replace with your 9:16 video URL -->
+                        <source src="VIDEO.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div id="video-loading" class="video-loading glass-card">
+                        <div class="spinner"></div>
+                        <span>Loading video...</span>
+                    </div>
+                    <button id="sound-control" class="sound-control">
+                        <span id="sound-icon">🔇</span>
+                    </button>
+                </div>
+                
+                <p id="video-complete-message" class="text-slate-200 text-lg mt-4 hidden">Video completed! Moving to the next page...</p>
+                
+                <!-- Fallback button in case video doesn't auto-advance -->
+                <button data-next="3" class="next-btn glow-button font-bold py-3 px-8 rounded-full mt-6 hidden" id="manual-next-btn">Continue</button>
+            </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div id="step-3" class="step-card hidden">
+            <div class="glass-card rounded-2xl p-8 md:p-12 flex flex-col items-center gap-6 w-full">
+                <h2 class="text-3xl md:text-4xl font-bold gradient-text mb-4">A Few Things I Adore About You</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full text-left">
+                    <div class="grid-item glass-card rounded-xl p-4 flex flex-col items-center justify-center text-center">
+                        <span class="text-4xl mb-2">✨</span>
+                        <h3 class="font-bold text-xl">Your Eyes</h3>
+                        <p class="text-slate-300 mt-2">They sparkle with kindness and intelligence</p>
+                    </div>
+                    <div class="grid-item glass-card rounded-xl p-4 flex flex-col items-center justify-center text-center">
+                        <span class="text-4xl mb-2">😊</span>
+                        <h3 class="font-bold text-xl">That Smile</h3>
+                        <p class="text-slate-300 mt-2">It brightens up even the gloomiest days</p>
+                    </div>
+                    <div class="grid-item glass-card rounded-xl p-4 col-span-1 md:col-span-2 flex flex-col items-center justify-center text-center">
+                        <span class="text-4xl mb-2">🌟</span>
+                        <h3 class="font-bold text-xl">Your Radiant Spirit</h3>
+                        <p class="text-slate-300 mt-2">Lights up everything, even when I feel invisible beside it</p>
+                    </div>
+                </div>
+                <button data-next="4" class="next-btn glow-button font-bold py-3 px-8 rounded-full mt-6">Remember this?</button>
+            </div>
+        </div>
+
+        <!-- Step 4 - Updated with properly sized polaroid for 1192x1240 image -->
+        <div id="step-4" class="step-card hidden">
+            <div class="glass-card rounded-2xl p-8 md:p-12 flex flex-col items-center gap-6">
+                <h2 class="text-3xl md:text-4xl font-bold gradient-text">Moments We Didn't Share...</h2>
+                
+                <!-- Updated Polaroid for 1192x1240 image -->
+                <div id="polaroid" class="polaroid">
+                    <div class="polaroid-image-container">
+                        <!-- Replace with your 1192x1240 image -->
+                        <img src="photo.jpg" 
+                             alt="A memorable moment" 
+                             class="polaroid-image">
+                    </div>
+                    <p class="text-center text-gray-800 font-mono text-sm mt-3">Things left unsaid</p>
+                </div>
+                
+                <p class="text-slate-200 text-lg mt-4 leading-relaxed">We never really got to hang out alone, and I never had the chance to talk openly with you. Even when I tried to take you out or go for a walk, it never worked out, but somehow even that feels memorable. There's still time ahead, and I hope we can create new memories together.</p>
+                <button data-next="5" class="next-btn glow-button font-bold py-3 px-8 rounded-full mt-6">One last thing...</button>
+            </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div id="step-5" class="step-card hidden">
+            <div class="glass-card rounded-2xl p-8 md:p-12 flex flex-col items-center gap-6">
+                <span class="text-6xl">🎂</span>
+                <h2 class="text-4xl md:text-5xl font-bold gradient-text">My Wish For You</h2>
+                <p class="text-slate-200 text-lg"> May the next year bring love, success, and happiness. May your dreams soar higher than ever. I only wish I could be there, standing close, to see you cut the cake and whisper ‘Happy Birthday’ right in front of you.</p>
+                <div id="final-text-container" class="h-16">
+                    <h3 id="final-text" class="text-3xl md:text-4xl font-bold gradient-text opacity-0 transform translate-y-4">Happy Birthday, Aanchal!</h3>
+                </div>
+                <button id="celebrate-btn" class="glow-button font-bold py-3 px-8 rounded-full mt-4">Celebrate!</button>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // --- GSAP & Steps Logic ---
+        const steps = document.querySelectorAll('.step-card');
+        const nextButtons = document.querySelectorAll('.next-btn');
+        const progressBar = document.getElementById('progress-fill');
+        const celebrateBtn = document.getElementById('celebrate-btn');
+        const finalMessage = document.getElementById('final-text');
+        let currentStep = 1;
+        const totalSteps = steps.length;
+
+        // Video elements
+        const birthdayVideo = document.getElementById('birthday-video');
+        const videoLoading = document.getElementById('video-loading');
+        const videoCompleteMessage = document.getElementById('video-complete-message');
+        const manualNextBtn = document.getElementById('manual-next-btn');
+        const soundControl = document.getElementById('sound-control');
+        const soundIcon = document.getElementById('sound-icon');
+
+        gsap.fromTo(steps[0], { autoAlpha:0, y:30 }, { autoAlpha:1, y:0, duration:1, ease:"power2.out" });
+
+        function updateProgressBar() {
+            const progress = ((currentStep-1)/(totalSteps-1))*100;
+            gsap.to(progressBar, { width: `${progress}%`, duration: 0.5, ease:"power2.out" });
+        }
+        updateProgressBar();
+
+        function showStep(stepNumber) {
+            const currentCard = document.getElementById(`step-${currentStep}`);
+            const nextCard = document.getElementById(`step-${stepNumber}`);
+            if (!currentCard || !nextCard) return;
+            
+            const tl = gsap.timeline();
+            tl.to(currentCard, { autoAlpha:0, scale:0.95, duration:0.4, ease:"power2.in" })
+              .set(currentCard, { display:'none' })
+              .set(nextCard, { display:'block', autoAlpha:0, y:30, scale:0.95 })
+              .to(nextCard, { autoAlpha:1, y:0, scale:1, duration:0.6, ease:"power2.out" });
+            
+            currentStep = stepNumber;
+            updateProgressBar();
+            
+            // Special handling for Step 2 - auto-play video
+            if (stepNumber === 2) {
+                // Reset video to beginning
+                birthdayVideo.currentTime = 0;
+                
+                // Show loading indicator
+                videoLoading.style.display = 'flex';
+                videoCompleteMessage.classList.add('hidden');
+                
+                // Attempt to play the video with sound
+                const playPromise = birthdayVideo.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        // Video started playing successfully
+                        videoLoading.style.display = 'none';
+                        // Ensure sound is enabled
+                        birthdayVideo.muted = false;
+                        updateSoundIcon();
+                    }).catch((error) => {
+                        // Autoplay with sound failed, try with muted
+                        console.log('Autoplay with sound failed, trying muted:', error);
+                        birthdayVideo.muted = true;
+                        birthdayVideo.play().then(() => {
+                            videoLoading.style.display = 'none';
+                            updateSoundIcon();
+                        }).catch((error2) => {
+                            // Autoplay failed completely, show manual play button
+                            console.error('Autoplay failed:', error2);
+                            videoLoading.innerHTML = '<span>Click to play video</span>';
+                            videoLoading.style.cursor = 'pointer';
+                            videoLoading.onclick = () => {
+                                birthdayVideo.play();
+                                videoLoading.style.display = 'none';
+                            };
+                        });
+                    });
+                }
+            }
+        }
+
+        // Sound control functionality
+        soundControl.addEventListener('click', () => {
+            birthdayVideo.muted = !birthdayVideo.muted;
+            updateSoundIcon();
+        });
+
+        function updateSoundIcon() {
+            soundIcon.textContent = birthdayVideo.muted ? '🔇' : '🔊';
+        }
+
+        nextButtons.forEach(btn => {
+            btn.addEventListener('click', ()=> {
+                const nextStep = parseInt(btn.getAttribute('data-next'));
+                if(nextStep) showStep(nextStep);
+            });
+        });
+
+        // Video ended event - automatically go to next step
+        birthdayVideo.addEventListener('ended', () => {
+            videoCompleteMessage.classList.remove('hidden');
+            
+            // Wait a moment then auto-advance
+            setTimeout(() => {
+                showStep(3);
+            }, 1500);
+        });
+
+        // Video error handling
+        birthdayVideo.addEventListener('error', () => {
+            videoLoading.innerHTML = '<span>Video failed to load. Click continue.</span>';
+            manualNextBtn.classList.remove('hidden');
+        });
+
+        // Polaroid hover
+        const polaroid = document.getElementById('polaroid');
+        if(polaroid){
+            polaroid.addEventListener('mousemove', e=>{
+                const rect = polaroid.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width/2;
+                const y = e.clientY - rect.top - rect.height/2;
+                const rotateX = -y/(rect.height/2)*5;
+                const rotateY = x/(rect.width/2)*5;
+                gsap.to(polaroid, { rotationX: rotateX, rotationY: rotateY, transformPerspective:500, ease:"power1.out", duration:0.5 });
+            });
+            polaroid.addEventListener('mouseleave', ()=>{
+                gsap.to(polaroid, { rotationX:0, rotationY:3, ease:"power1.out", duration:0.5 });
+            });
+        }
+
+        // Celebration finale
+        if(celebrateBtn){
+            celebrateBtn.addEventListener('click', ()=>{
+                gsap.timeline()
+                    .to(celebrateBtn, { autoAlpha:0, y:-20, duration:0.5, ease:"power2.in" })
+                    .to(finalMessage, { autoAlpha:1, y:0, duration:1, ease:"elastic.out(1,0.5)" }, "-=0.2");
+                runCelebration();
+            });
+        }
+
+        function runCelebration(){
+            // Add more floating flowers for celebration
+            for(let i = 0; i < 20; i++) {
+                const flower = document.createElement('div');
+                flower.className = 'flower';
+                flower.innerHTML = '🌸';
+                flower.style.left = Math.random() * 100 + '%';
+                flower.style.top = Math.random() * 100 + '%';
+                flower.style.animationDuration = (15 + Math.random() * 15) + 's';
+                flower.style.animationDelay = (Math.random() * 10) + 's';
+                document.querySelector('.floating-flowers').appendChild(flower);
+            }
+            
+            // Confetti celebration
+            confetti({ particleCount:150, spread:100, origin:{ y:0.6 }, colors:['#ec4899','#8b5cf6','#f9a8d4','#c4b5fd'] });
+            const duration = 5000;
+            const animationEnd = Date.now()+duration;
+            const defaults = { startVelocity:30, spread:360, ticks:60, zIndex:0 };
+            function randomInRange(min,max){ return Math.random()*(max-min)+min; }
+            const interval = setInterval(()=>{
+                const timeLeft = animationEnd-Date.now();
+                if(timeLeft<=0) return clearInterval(interval);
+                const particleCount = 50*(timeLeft/duration);
+                confetti({...defaults, particleCount, origin:{x:randomInRange(0.1,0.3),y:Math.random()-0.2}});
+                confetti({...defaults, particleCount, origin:{x:randomInRange(0.7,0.9),y:Math.random()-0.2}});
+            }, 250);
+            const emoji=['🌸','✨','💖'];
+            setTimeout(()=>{
+                confetti({ particleCount:30, angle:60, spread:55, origin:{x:0}, shapes:['text'], text:emoji, scalar:3 });
+                confetti({ particleCount:30, angle:120, spread:55, origin:{x:1}, shapes:['text'], text:emoji, scalar:3 });
+            }, 1000);
+        }
+        
+        // Initialize sound icon
+        updateSoundIcon();
+    </script>
+</body>
+</html>
